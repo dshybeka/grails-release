@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2012 the original author or authors
+ * Copyright 2011-2013 the original author or authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 class ReleaseGrailsPlugin {
     def version = "2.2.1"
-    def grailsVersion = "2.0 > *"
+    def grailsVersion = "2.3 > *"
     def author = "Graeme Rocher"
     def authorEmail = "grocher@vmware.com"
-    def title = "Release Plugin"
-    def description = 'Allows you to publish Grails plugins, either to a public or private repository. It also supports deploying Grails applications and plugins to Maven repositories without the need to use Maven directly.'
+    def title = "Release Plugin without settings.xml"
+    def description = 'Allows you to publish Grails plugins, either to a public or private repository. Updated ant see http://jira.codehaus.org/browse/MANTTASKS-174'
     def license = "APACHE"
     def organization = [ name: "SpringSource", url: "http://www.springsource.org/" ]
     def developers = [ [ name: "Peter Ledbrook", email: "pledbrook@vmware.com" ] ]
