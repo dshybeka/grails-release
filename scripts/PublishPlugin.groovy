@@ -1,9 +1,4 @@
-
-
-import org.apache.commons.codec.digest.DigestUtils
 import org.codehaus.groovy.grails.cli.CommandLineHelper
-
-import grails.plugins.rest.client.*
 
 includeTargets << grailsScript("_GrailsPluginDev")
 includeTargets << new File(releasePluginDir, "scripts/_GrailsMaven.groovy")
@@ -40,8 +35,8 @@ where
     --no-message   = Commit using just the default message.
 
     --no-overwrite = Don't fail if this plugin has already been published.
-                     This is useful if this plugin is being published from a 
-                     continuous integration server and you don't want the 
+                     This is useful if this plugin is being published from a
+                     continuous integration server and you don't want the
                      command to exit with failure.
 
     --allow-overwrite = Allow any existing plugin to be overwritten.
@@ -67,6 +62,7 @@ target(default: "Publishes a plugin to either a Subversion or Maven repository."
     if (argsMap["pingOnly"]) { argsMap["ping-only"] = true }
     if (argsMap["noOverwrite"]) { argsMap["no-overwrite"] = true }
     if (argsMap["allowOverwrite"]) { argsMap["allow-overwrite"] = true }
+    if (argsMap["promptAuth"]) { argsMap["prompt-auth"] = true }
 
     // Read the plugin information from the POM.
     pluginInfo = new XmlSlurper().parse(new File(pomFileLocation))
@@ -315,6 +311,20 @@ target(default: "Publishes a plugin to either a Subversion or Maven repository."
             }
         }
 
+        if (argsMap["prompt-auth"]) {
+            def inputHelper = new CommandLineHelper()
+            username = usernput(
+                    inputHelper,
+                    "Username for repository: ",
+                    "You haven't configured the plugin repository username - required in non-interactive mode")
+            password = userInput(
+                    inputHelper,
+                    "Password for repository: ",
+                    "You haven't configured the plugin repository password - required in non-interactive mode")
+
+            repoDfn.configurer = { authentication username: username, password: password }
+        }
+
         deployer = classLoader.loadClass("grails.plugins.publish.maven.MavenDeployer").newInstance(ant, repoDefn, protocol)
     }
     else {
@@ -420,9 +430,10 @@ target(default: "Publishes a plugin to either a Subversion or Maven repository."
         def converterConfig = new org.codehaus.groovy.grails.web.converters.configuration.ConvertersConfigurationInitializer()
         converterConfig.initialize(grailsApp)
         def rest = classLoader.loadClass("grails.plugins.rest.client.RestBuilder").newInstance()
+		def jsonParams = pluginInfo + [ url : repo.uri.toString() ]
         def resp = rest.put(portalUrl.toString()) {
             auth username, password
-            json( pluginInfo + [ url : repo.uri.toString() ] )
+            json({ jsonParams })
         }
         switch(resp.status) {
             case 401:
@@ -436,7 +447,7 @@ target(default: "Publishes a plugin to either a Subversion or Maven repository."
                     println "ERROR: Notification failed - status ${resp.status} - ${resp.json.message}"
                 }
                 else {
-                    println "Notification successful"    
+                    println "Notification successful"
                 }
         }
 

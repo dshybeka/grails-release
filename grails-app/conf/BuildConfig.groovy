@@ -1,7 +1,7 @@
 grails.project.work.dir = 'target'
 grails.project.docs.output.dir = "docs"
-grails.project.source.level = 1.6
 
+grails.project.dependency.resolver = "maven"
 grails.project.dependency.resolution = {
 
     inherits "global"
@@ -21,8 +21,7 @@ grails.project.dependency.resolution = {
     }
 
     dependencies {
-        provided "org.apache.ivy:ivy:2.2.0"
-        provided("org.apache.maven:maven-ant-tasks:2.1.3") {
+        compile("org.apache.maven:maven-ant-tasks:2.1.3") {
             excludes "commons-logging", "xml-apis", "groovy"
         }
         test("org.gmock:gmock:0.8.0") {
