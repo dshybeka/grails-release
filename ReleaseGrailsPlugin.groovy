@@ -14,16 +14,11 @@
  * limitations under the License.
  */
 class ReleaseGrailsPlugin {
-    def version = "2.2.1"
-    def grailsVersion = "2.3 > *"
+    def version = "2.2.1-SNAPSHOT"
+    def grailsVersion = "2.0 > *"
     def author = "Graeme Rocher"
     def authorEmail = "grocher@vmware.com"
-    def title = "Release Plugin without settings.xml"
-    def description = 'Allows you to publish Grails plugins, either to a public or private repository. Updated ant see http://jira.codehaus.org/browse/MANTTASKS-174'
+    def title = "Release Plugin with updated ant maven tasks"
+    def description = 'Allows you to publish Grails plugins, either to a public or private repository. Updated ant maven tasks see http://jira.codehaus.org/browse/MANTTASKS-174'
     def license = "APACHE"
-    def organization = [ name: "SpringSource", url: "http://www.springsource.org/" ]
-    def developers = [ [ name: "Peter Ledbrook", email: "pledbrook@vmware.com" ] ]
-    def issueManagement = [ system: "JIRA", url: "http://jira.grails.org/browse/GPRELEASE" ]
-    def scm = [ url: "https://github.com/grails-plugins/grails-release/" ]
-    def documentation = "http://grails-plugins.github.com/grails-release/"
 }

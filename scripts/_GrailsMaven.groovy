@@ -306,70 +306,70 @@ target(generatePom: "Generates a pom.xml file for the current project unless './
                 name grailsAppName
             }
 
-            def excludeResolver = grailsSettings.dependencyManager.excludeResolver
-            def excludeInfo = excludeResolver.resolveExcludes()
-
-            if (plugin) {
-                dependencies {
-                    def excludeHandler = { dep ->
-                        if (dep.transitive == false) {
-                            def excludes = excludeInfo[dep]
-                            if (excludes != null) {
-                                exclusions {
-                                    for(exc in excludes) {
-                                        exclusion {
-                                            groupId exc.group
-                                            artifactId exc.name
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        else if (dep.excludes) {
-                            exclusions {
-                                for(er in dep.excludes) {
-                                    exclusion {
-                                        if (er.group != '*') {
-                                            groupId er.group
-                                        }
-                                        else {
-                                            def excludes = excludeInfo[dep]
-                                            if (excludes != null) {
-                                                def resolvedExclude = excludes.find { it.name == er.name }
-                                                if (resolvedExclude != null) {
-                                                    groupId resolvedExclude.group
-                                                }
-                                            }
-
-                                        }
-                                        artifactId er.name
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    corePlugins = pluginManager.allPlugins.findAll { it.pluginClass.name.startsWith("org.codehaus.groovy.grails.plugins") }*.name
-
-                    def dependencyManager = grailsSettings.dependencyManager
-
-                    def allowedScopes = ['runtime','compile', 'provided']
-                    for (scope in allowedScopes) {
-                        def appDeps = dependencyManager.getApplicationDependencies(scope)
-                        for(dep in appDeps) {
-                            if (scope in allowedScopes && dep.exported) {
-                                dependency {
-                                    groupId dep.group
-                                    artifactId dep.name
-                                    version dep.version
-                                    delegate.scope(scope)
-
-                                    excludeHandler(dep)
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+//            def excludeResolver = grailsSettings.dependencyManager.excludeResolver
+//            def excludeInfo = excludeResolver.resolveExcludes()
+//
+//            if (plugin) {
+//                dependencies {
+//                    def excludeHandler = { dep ->
+//                        if (dep.transitive == false) {
+//                            def excludes = excludeInfo[dep]
+//                            if (excludes != null) {
+//                                exclusions {
+//                                    for(exc in excludes) {
+//                                        exclusion {
+//                                            groupId exc.group
+//                                            artifactId exc.name
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+//                        else if (dep.excludes) {
+//                            exclusions {
+//                                for(er in dep.excludes) {
+//                                    exclusion {
+//                                        if (er.group != '*') {
+//                                            groupId er.group
+//                                        }
+//                                        else {
+//                                            def excludes = excludeInfo[dep]
+//                                            if (excludes != null) {
+//                                                def resolvedExclude = excludes.find { it.name == er.name }
+//                                                if (resolvedExclude != null) {
+//                                                    groupId resolvedExclude.group
+//                                                }
+//                                            }
+//
+//                                        }
+//                                        artifactId er.name
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                    corePlugins = pluginManager.allPlugins.findAll { it.pluginClass.name.startsWith("org.codehaus.groovy.grails.plugins") }*.name
+//
+//                    def dependencyManager = grailsSettings.dependencyManager
+//
+//                    def allowedScopes = ['runtime','compile', 'provided']
+//                    for (scope in allowedScopes) {
+//                        def appDeps = dependencyManager.getApplicationDependencies(scope)
+//                        for(dep in appDeps) {
+//                            if (scope in allowedScopes && dep.exported) {
+//                                dependency {
+//                                    groupId dep.group
+//                                    artifactId dep.name
+//                                    version dep.version
+//                                    delegate.scope(scope)
+//
+//                                    excludeHandler(dep)
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
         }
     }
     event("StatusUpdate",["POM generated: ${pomFileLocation}"])
