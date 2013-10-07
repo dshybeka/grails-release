@@ -17,6 +17,7 @@ grails.project.dependency.resolution = {
     }
 
     dependencies {
+        compile "org.apache.ivy:ivy:2.2.0"
         compile("org.apache.maven:maven-ant-tasks:2.1.4-SNAPSHOT") {
             excludes "commons-logging", "xml-apis", "groovy"
         }
@@ -26,6 +27,11 @@ grails.project.dependency.resolution = {
     }
 }
 
-grails.project.repos.'manageReleases'.url = "https://repository.corp.eharmony.com/nexus/content/repositories/internal-snapshots/"
-grails.project.repos.'manageReleases'.username = "dshybeka"
-grails.project.repos.'manageReleases'.password = "IZC7hlzh00"
+//grails.project.repos.'manageReleases'.url = "https://repository.corp.eharmony.com/nexus/content/repositories/internal-snapshots/"
+//grails.project.repos.'manageReleases'.username = "dshybeka"
+//grails.project.repos.'manageReleases'.password = "IZC7hlzh00"
+
+grails.project.repos.'plugin-repo'.url = "http://localhost:8081/nexus/content/repositories/snapshots/"
+grails.project.repos.'plugin-repo'.username = "admin"
+grails.project.repos.'plugin-repo'.password = "admin123"
+grails.project.repos.default = "plugin-repo"
